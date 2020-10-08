@@ -4,6 +4,7 @@ class UserModel {
   String email;
   String image;
   String username;
+  String password;
   String role;
   String token;
 
@@ -13,6 +14,7 @@ class UserModel {
       this.email,
       this.image,
       this.username,
+      this.password,
       this.role,
       this.token});
 
@@ -22,6 +24,7 @@ class UserModel {
     email = json['email'];
     image = json['image'];
     username = json['username'];
+    password = json['password'];
     role = json['role'];
     token = json['token'];
   }
@@ -33,6 +36,7 @@ class UserModel {
     data['email'] = this.email;
     data['image'] = this.image;
     data['username'] = this.username;
+    data['password'] = this.password;
     data['role'] = this.role;
     data['token'] = this.token;
     return data;

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_bloc/ui/shared/widgets/category/category-list.widget.dart';
+import 'package:shopping_bloc/blocs/cart.bloc.dart';
+import 'package:shopping_bloc/blocs/theme.bloc.dart';
+import 'package:shopping_bloc/blocs/user.bloc.dart';
+import 'package:shopping_bloc/ui/android/pages/tabs.page.dart';
 
 import 'blocs/home.bloc.dart';
 
@@ -16,6 +19,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<HomeBloc>.value(
           value: HomeBloc(),
         ),
+        ChangeNotifierProvider<CartBloc>.value(
+          value: CartBloc(),
+        ),
+        ChangeNotifierProvider<UserBloc>.value(
+          value: UserBloc(),
+        ),
+        ChangeNotifierProvider<ThemeBloc>.value(
+          value: ThemeBloc(),
+        ),
       ],
       child: Main(),
     );
@@ -26,40 +38,16 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var bloc = Provider.of<ThemeBloc>(context);
+
     return MaterialApp(
       title: 'Shopping Cart',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      theme: bloc.theme,
+      home: DefaultTabController(
+        length: 3,
+        child: TabsPage(),
       ),
-      home: HomePage(),
     );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final HomeBloc bloc = Provider.of<HomeBloc>(context);
-
-    return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: 60),
-          Text(
-            "Categorias",
-            style: Theme.of(context).textTheme.headline5,
-          ),
-          SizedBox(height: 10),
-          CategoryList(
-            categories: bloc.categorires,
-          )
-        ],
-      ),
-    ));
   }
 }
